@@ -1,0 +1,12 @@
+version: '3.6'
+services:
+  mongo:
+    image: mongo:4.0.10-xenial
+    container_name: mongo_news_container
+    ports:
+      - "8082:8081"
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+      MONGO_INITDB_DATABASE: news_db
