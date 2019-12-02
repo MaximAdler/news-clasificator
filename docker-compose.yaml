@@ -3,10 +3,26 @@ services:
   mongo:
     image: mongo:4.0.10-xenial
     container_name: mongo_news_container
-    ports:
-      - "8082:8081"
-      - "27017:27017"
+    networks:
+      classificator:
+        aliases:
+          - mongodb
+          - documentstorage
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: pass
       MONGO_INITDB_DATABASE: news_db
+    volumes:
+      - ./docker/mongo_data:/data/db
+      - ./docker/data/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    ports:
+      - "8082:8081"
+      - "27017:27017"
+
+volumes:
+  mongo_data:
+  data:
+
+networks:
+  classificator:
+    driver: bridge
